@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>summ — container registry</title>
+<meta name="description" content="summ is an OCI-conformant container registry in a single binary, with a built-in web UI, pull counts and tag history. No database, no object store, nothing else to run.">
+
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="stylesheet" href="/style.css">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://summcr.com/">
+<meta property="og:title" content="summ — container registry">
+<meta property="og:description" content="An OCI-conformant container registry in a single binary. Web UI, pull counts and tag history included.">
+<meta property="og:image" content="https://summcr.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <a class="brand" href="/">
+      <!--
+        An inline copy of `logo.svg`, so the tile takes its colour from the
+        palette and follows the theme - an <img> could not. The two must stay
+        in step; the path is the only thing duplicated.
+      -->
+      <svg class="brand-mark" viewBox="0 0 32 32" width="26" height="26" aria-hidden="true">
+        <rect class="tile" width="32" height="32" rx="7"/>
+        <path class="glyph" d="M22 8H10l6 8-6 8h12" fill="none" stroke-width="4" stroke-linecap="square"/>
+      </svg>
+      <span class="brand-name">summ</span>
+    </a>
+    <nav class="topbar-nav" aria-label="Main">
+      <a href="#features">Features</a>
+      <a href="#install">Install</a>
+      <a href="https://demo.registry.summcr.com/r/summcr/summ">Demo</a>
+      <a href="https://github.com/summcr/summ#readme">Docs</a>
+      <a href="https://github.com/summcr/summ">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="shell hero-inner">
+      <svg class="hero-mark" viewBox="0 0 32 32" width="84" height="84" role="img" aria-label="summ">
+        <title>summ</title>
+        <rect class="tile" width="32" height="32" rx="7"/>
+        <path class="glyph" d="M22 8H10l6 8-6 8h12" fill="none" stroke-width="4" stroke-linecap="square"/>
+      </svg>
+
+      <h1>Container Registry</h1>
+      <p class="lede">
+        summ is an OCI-conformant container registry in a single binary — with a
+        built-in web UI, pull counts and tag history. No database, no object
+        store, nothing else to stand up alongside it.
+      </p>
+
+      <div class="cmd" data-copy>
+        <code>curl -fsSL https://raw.githubusercontent.com/summcr/summ/main/scripts/install.sh | sh</code>
+        <button class="copy" type="button" aria-label="Copy install command">Copy</button>
+      </div>
+
+      <p class="hero-actions">
+        <a class="btn btn-primary" href="#install">Get started</a>
+        <a class="btn" href="https://demo.registry.summcr.com/r/summcr/summ">See the live demo</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="shell demo-wrap" aria-label="summ starting up">
+    <!--
+      The demo slot. Replace the whole <pre> with the recording when it exists,
+      keeping the window chrome around it:
+
+        <img src="/assets/demo.gif" width="1200" height="720" alt="Installing
+             summ, starting it, and pushing an image to it">
+    -->
+    <figure class="term">
+      <div class="term-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+<pre class="term-body"><span class="p">$</span> <span class="c">./summ serve</span>
+summ 0.1.0-rc.1
+  listening on  127.0.0.1:3110
+  registry      http://127.0.0.1:3110/v2/
+  data dir      /home/you/data
+  purge         every 1h after 1d unreferenced
+  auth mode     open - no credential is required, to pull or to push
+                any process on this machine may pull, push and
+                delete; the listener is on loopback, so nothing
+                else can reach it
+
+<span class="p">$</span> <span class="c">docker push 127.0.0.1:3110/demo/alpine</span>
+The push refers to repository [127.0.0.1:3110/demo/alpine]
+latest: digest: sha256:beefc0de… size: 527
+
+<span class="p">$</span> <span class="c">open http://127.0.0.1:3110</span>   <span class="m"># the web UI is already there</span>
+</pre>
+      <figcaption>A registry, from nothing, in two commands.</figcaption>
+    </figure>
+  </section>
+
+  <section class="shell cards" aria-label="Get started">
+    <a class="card" href="#install">
+      <h2>Install summ</h2>
+      <p>One command on Linux and macOS, or one <code>docker run</code>. A single
+         file, no runtime dependencies.</p>
+      <span class="more">Install →</span>
+    </a>
+    <a class="card" href="https://demo.registry.summcr.com/r/summcr/summ">
+      <h2>Try the demo</h2>
+      <p>The built-in web UI on a real registry — repositories, tags, pull grids
+         and tag timelines.</p>
+      <span class="more">Open the demo →</span>
+    </a>
+    <a class="card" href="https://github.com/summcr/summ">
+      <h2>Read the source</h2>
+      <p>Apache-2.0, written in Rust, with the docs, the API reference and the
+         deployment guide beside it.</p>
+      <span class="more">GitHub →</span>
+    </a>
+  </section>
+
+  <section class="shell features" id="features">
+    <h2 class="section-title">Batteries included</h2>
+
+    <div class="feature-grid">
+      <article class="feature">
+        <h3>A built-in web UI</h3>
+        <p>Same binary, same port, assets compiled in — no build step, no
+           framework, no CDN, so it works air-gapped. Browse repositories, search
+           names, drill into a manifest.</p>
+      </article>
+
+      <article class="feature">
+        <h3>Pull counts</h3>
+        <p>Every repository, tag and manifest gets a thirty-day contribution grid
+           and a last-24-hours strip. Serving a pull never touches the store, so
+           the counters cost the pull path nothing.</p>
+      </article>
+
+      <article class="feature">
+        <h3>Tag history</h3>
+        <p>What has this tag pointed at, and what has this manifest ever been
+           called — the same endpoint, addressed by tag or by digest. A deleted
+           tag still answers.</p>
+      </article>
+
+      <article class="feature">
+        <h3>Metadata is the product</h3>
+        <p>Four of the five serial steps in a cold <code>containerd</code> pull
+           are metadata lookups. summ is built around a key schema over RocksDB:
+           nothing is a directory walk, and no stored value grows with the size
+           of the registry.</p>
+      </article>
+
+      <article class="feature">
+        <h3>Space that comes back</h3>
+        <p>A background purge reclaims unreferenced layer bytes, unfinished
+           uploads and empty names, with a grace period in front of it. A
+           <code>dry-run</code> pass says what it would reclaim before you let
+           one run.</p>
+      </article>
+
+      <article class="feature">
+        <h3>Auth over everything it serves</h3>
+        <p><code>--auth-mode open|public-pull|private</code> covers <code>/v2/</code>,
+           the discovery API and the UI at once, with no exemption list. API keys
+           over HTTP Basic, so <code>docker login</code> works with no token
+           server to run.</p>
+      </article>
+    </div>
+
+    <p class="badge-line">
+      <strong>Conformant.</strong> The OCI <code>distribution-spec</code>
+      conformance suite passes at every profile with zero failures — 1032 checks
+      at the suite's <code>dev</code> profile, referrers included, nothing skipped.
+    </p>
+  </section>
+
+  <section class="shell install" id="install">
+    <h2 class="section-title">Install</h2>
+
+    <div class="install-grid">
+      <div class="install-col">
+        <h3>Prebuilt binary</h3>
+        <div class="cmd" data-copy>
+          <code>curl -fsSL https://raw.githubusercontent.com/summcr/summ/main/scripts/install.sh | sh</code>
+          <button class="copy" type="button" aria-label="Copy install command">Copy</button>
+        </div>
+        <p>Reads <code>uname</code>, downloads the matching build, checks it
+           against the published SHA-256 and leaves a single <code>summ</code> in
+           the current directory. No PATH edits, no service files, no sudo.</p>
+        <div class="cmd" data-copy>
+          <code>./summ serve</code>
+          <button class="copy" type="button" aria-label="Copy run command">Copy</button>
+        </div>
+      </div>
+
+      <div class="install-col">
+        <h3>Docker</h3>
+        <div class="cmd" data-copy>
+          <code>docker run -d --name summ -p 3110:3110 -v summ-data:/var/lib/summ summcr/summ</code>
+          <button class="copy" type="button" aria-label="Copy docker command">Copy</button>
+        </div>
+        <p>Multi-architecture, so that line is the same on x86_64 and arm64.
+           Name the volume — without <code>-v</code> you still get one, but an
+           anonymous volume that <code>docker run --rm</code> deletes.</p>
+        <p>Either way the registry is on
+           <a href="http://127.0.0.1:3110">http://127.0.0.1:3110</a>, web UI
+           included.</p>
+      </div>
+    </div>
+
+    <p class="platforms">
+      Or take a tarball directly:
+      <a href="https://github.com/summcr/summ/releases/latest/download/summ-x86_64-unknown-linux-gnu.tar.gz">Linux x86_64</a> ·
+      <a href="https://github.com/summcr/summ/releases/latest/download/summ-aarch64-unknown-linux-gnu.tar.gz">Linux arm64</a> ·
+      <a href="https://github.com/summcr/summ/releases/latest/download/summ-aarch64-apple-darwin.tar.gz">macOS Apple silicon</a> ·
+      <a href="https://github.com/summcr/summ/releases/latest/download/summ-x86_64-apple-darwin.tar.gz">macOS Intel</a>
+    </p>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="shell foot-inner">
+    <span>summ — an OCI container registry, Apache-2.0.</span>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="https://github.com/summcr/summ">GitHub</a>
+      <a href="https://github.com/summcr/summ/releases">Releases</a>
+      <a href="https://github.com/summcr/summ/issues">Issues</a>
+      <a href="https://github.com/summcr/summ/blob/main/LICENSE">License</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+// The only script on the page: copy-to-clipboard on the command blocks. It
+// degrades to a plain, selectable code block wherever the API is unavailable.
+document.querySelectorAll('.cmd[data-copy]').forEach(function (box) {
+  var button = box.querySelector('.copy');
+  var code = box.querySelector('code');
+  if (!button || !code || !navigator.clipboard) { if (button) button.remove(); return; }
+  button.addEventListener('click', function () {
+    navigator.clipboard.writeText(code.textContent.trim()).then(function () {
+      button.textContent = 'Copied';
+      setTimeout(function () { button.textContent = 'Copy'; }, 1600);
+    });
+  });
+});
+</script>
+</body>
+</html>
