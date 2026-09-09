@@ -1,0 +1,45 @@
+# The installer this site serves at https://summcr.com/install.sh is a copy.
+# `scripts/install.sh` in summcr/summ is the source — it is the reviewable one,
+# it sits beside the release workflow whose asset names it depends on, and it is
+# what `./scripts/install.sh --dir …` runs locally. A copy that has drifted is a
+# stale installer on the domain every documented one-liner points at, and it
+# fails silently: it would install an older release perfectly well.
+#
+# So the check runs here rather than in summ. This repository holds the copy, so
+# this is where the failure belongs; and it runs on a schedule as well as on a
+# push, because drift starts with a commit to the *other* repository and nothing
+# here would otherwise notice.
+name: Install script drift
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  drift:
+    name: install.sh matches summcr/summ
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Byte-for-byte, deliberately: the two files are the same file, so a
+      # difference in a comment is as much a signal as one in the code. It
+      # fetches `main` rather than a tag because the script lives on main and
+      # never in a release.
+      - name: Compare against summcr/summ main
+        run: |
+          curl -fsSL --retry 3 \
+            https://raw.githubusercontent.com/summcr/summ/main/scripts/install.sh \
+            -o /tmp/install.sh.upstream
+          if ! diff -u /tmp/install.sh.upstream install.sh; then
+            echo
+            echo "install.sh here has drifted from summcr/summ."
+            echo "summ is the source: copy scripts/install.sh over this one."
+            exit 1
+          fi
+          echo "install.sh matches summcr/summ main"
