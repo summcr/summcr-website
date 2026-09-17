@@ -108,7 +108,8 @@ code {
 
 @media (max-width: 720px) {
   .topbar-nav { gap: 14px; font-size: 13.5px; }
-  .topbar-nav a:nth-child(4) { display: none; }
+  /* Docs - the one link that is also in the footer's reach. */
+  .topbar-nav a:nth-child(5) { display: none; }
 }
 
 /* ---- hero ------------------------------------------------------------- */
@@ -286,6 +287,43 @@ h1 {
 @media (max-width: 860px) {
   .cards, .feature-grid, .install-grid { grid-template-columns: 1fr; }
   .feature-grid { gap: 24px; }
+}
+
+/* ---- try it online ---------------------------------------------------- */
+
+.trial { padding-top: 72px; }
+
+.trial-panel {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 34px;
+  align-items: start;
+  padding: 34px;
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: 14px;
+}
+.trial-copy, .trial-facts { min-width: 0; }
+.trial .section-title { margin-bottom: 16px; }
+.trial-copy p { margin: 0 0 14px; font-size: 15.2px; color: var(--text-muted); }
+.trial-copy code { background: color-mix(in srgb, var(--bg) 55%, transparent); }
+.trial-note { color: var(--text); }
+.trial-copy p:last-child { margin: 22px 0 0; }
+
+.trial-facts {
+  margin: 0; padding: 18px 20px;
+  list-style: none;
+  background: color-mix(in srgb, var(--bg-raised) 78%, transparent);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  font-size: 14.5px;
+  color: var(--text-muted);
+}
+.trial-facts li + li { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-subtle); }
+.trial-facts strong { color: var(--text); font-weight: 600; }
+
+@media (max-width: 860px) {
+  .trial-panel { grid-template-columns: 1fr; padding: 26px; }
 }
 
 /* ---- footer ----------------------------------------------------------- */
